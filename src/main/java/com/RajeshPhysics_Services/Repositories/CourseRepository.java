@@ -16,7 +16,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
 	Optional<Course> findByName(String name);
 
-	@Query(value = "SELECT * FROM rajeshphysics.courses WHERE id LIKE CONCAT('%', :search, '%') OR name LIKE CONCAT('%', :search, '%') OR courseLanguage LIKE CONCAT('%', :search, '%')", nativeQuery = true)
+	@Query(value = "SELECT * FROM rajeshphysics.courses WHERE id LIKE CONCAT('%', :search, '%') OR course_name LIKE CONCAT('%', :search, '%') OR course_language LIKE CONCAT('%', :search, '%')", nativeQuery = true)
 	Page<Course> findByKeyword(@Param("search") String search, PageRequest page);
 
 }
