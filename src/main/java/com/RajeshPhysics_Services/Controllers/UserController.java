@@ -29,7 +29,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/getAll")
+    @GetMapping("/get-all")
     public ResponseEntity<GenericResponse<PageableDataResponse<List<User>>>> getPaidStudent(
             @RequestParam(defaultValue = AppConstrants.PAGE_NUMBER, required = false) Integer pageNumber,
             @RequestParam(defaultValue = AppConstrants.PAGE_SIZE, required = false) Integer pageSize,

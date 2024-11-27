@@ -32,7 +32,7 @@ public class Course implements Serializable {
 	private String name;
 	
 	@Column(name = "COURSE_IMAGE_PATH", nullable = true)
-	private String imgPath = "default.png";
+	private String imgPath;
 	
 	@Column(name = "COURSE_LANGUAGE", nullable = false)
 	private String courseLanguage;
