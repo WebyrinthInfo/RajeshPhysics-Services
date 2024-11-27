@@ -7,7 +7,8 @@ public class PermissionConstrants {
 			"/api/role/get-all",
 			"/api/ajax/login",
 			"/api/ajax/registration",
-			"/api/course/get-all"
+			"/api/course/get-all",
+			"/api/video/upload"
 			
 			
 	};

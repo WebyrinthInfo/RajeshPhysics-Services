@@ -1,5 +1,7 @@
 package com.RajeshPhysics_Services.Payloads;
 
+import java.net.URI;
+
 public class AppConstrants {
 
 //	----------------STUDENT TYPE----------------------
@@ -33,6 +35,10 @@ public class AppConstrants {
 	
 	public static final long JWT_TOKEN_VALIDITY = 3 *24*60 * 60;
 	public static final String AUTHORIZATION_HEADER = "Authorization";
+	
+//	------------------GOOGLE RECAPTCHA---------------------------
+	public static final String RECAPTCHA_SECRET = null;
+	public static final URI GOOGLE_RECAPTCHA_ENDPOINT = null;
 	
 	
 	
