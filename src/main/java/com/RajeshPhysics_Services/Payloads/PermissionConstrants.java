@@ -8,6 +8,7 @@ public class PermissionConstrants {
 			"/api/ajax/login",
 			"/api/ajax/registration"
 			
+			
 	};
 	
 	public static final String[] ADMIN_URLS={
@@ -16,7 +17,8 @@ public class PermissionConstrants {
 	};
 	
 	public static final String[] WY_URLS= {
-		"/api/role/add"
+		"/api/role/add",
+		"/api/course/add"
 			
 	};
 	

@@ -53,6 +53,7 @@ public class RajeshPhysicsServicesApplication implements CommandLineRunner {
 			Role role1 = new Role();
 			role1.setId(1L);
 			role1.setName("WY");
+			role1.setIsActive(1);
 			role1.setDescription("this roles allow all apis to access.");
 			roles.add(role1);
 

@@ -1,4 +1,6 @@
 POST : /api/ajax/login : {"username":"9939718838","password":"India@123"}
 ============================================================================================================================
-POST : /api/ajax/registration : {"firstName" :"webyrinth","middleName" : "(P)","lastName": "Ltd.","address" : "santi nagar jehanabad","mobile" : "9939718838","isActive" : 1,"password" :"India@123","languageMode":"HINGLISH","status" : "ACTIVE"}
+POST : /api/ajax/registration || /api/ajax/registration?roleId=1 : {"firstName" :"webyrinth","middleName" : "(P)","lastName": "Ltd.","address" : "santi nagar jehanabad","mobile" : "9939718838","isActive" : 1,"password" :"India@123","languageMode":"HINGLISH","status" : "ACTIVE"}
+============================================================================================================================
+POST : /api/course/add : {"name" : "6","courseLanguage":"Hinglish","courseTitle" : "this is course for 6 class","courseDescription" :"this is test configuration","coursePrice" : "700"}
 ============================================================================================================================
