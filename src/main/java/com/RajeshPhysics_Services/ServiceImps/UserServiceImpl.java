@@ -12,14 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.RajeshPhysics_Services.Exceptions.ForbbidonExceptions;
 import com.RajeshPhysics_Services.Exceptions.ResourceAlreadyExistsException;
 import com.RajeshPhysics_Services.Exceptions.ResourceNotFoundException;
 import com.RajeshPhysics_Services.Models.Role;
 import com.RajeshPhysics_Services.Models.User;
+import com.RajeshPhysics_Services.Payloads.PageableDataResponse;
 import com.RajeshPhysics_Services.Repositories.RoleRepository;
 import com.RajeshPhysics_Services.Repositories.UserRepository;
 import com.RajeshPhysics_Services.Services.UserService;
 import com.RajeshPhysics_Services.Utils.JwtUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.parser.Part.IgnoreCaseType;
 
 
 @Service
@@ -78,6 +84,71 @@ public class UserServiceImpl implements UserService {
 				
 				return save;
 		}
+	}
+	
+	@Override
+	public User updateUserToken(String username, Long days, String isPaid) {
+		User user = userRepo.findByMobile(username).orElseThrow(()-> new ResourceNotFoundException("username is not found : "+ username));
+		LocalDate currentDate = LocalDate.now();
+		LocalDate plusDays = currentDate.plusDays(days);
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		String expitedDate = dtf.format(plusDays);
+		user.setId(user.getId());
+		user.setAccountExpireAt(expitedDate);
+		user.setJwtToken(jwtUtil.generateTokenDays(user, days));
+		user.setIsPaid(isPaid.trim().toUpperCase());
+		User save = userRepo.save(user);
+		return save;
+	}
+	
+	@Override
+	public PageableDataResponse<List<User>> getAllUser(Integer pageNumber, Integer pageSize, String sortBy, String sortDir, String search) {
+		try {
+			if(search==null || search == "") {
+				Sort sorting = null;
+				if(sortDir.equalsIgnoreCase("desc")) {
+					sorting = Sort.by(sortBy).descending();
+				}else {
+					sorting = Sort.by(sortBy).ascending();
+				}
+					
+				PageRequest page = PageRequest.of(pageNumber, pageSize, sorting);
+				Page<User> pageUser = userRepo.findAll(page);
+				List<User> content = pageUser.getContent();
+				PageableDataResponse<List<User>> pr = new PageableDataResponse<>();
+				pr.setContent(content);
+				pr.setPageNumber(pageUser.getNumber());
+				pr.setPageSize(pageUser.getSize());
+				pr.setTotalElements(pageUser.getTotalElements());
+				pr.setTotalPages(pageUser.getTotalPages());
+				pr.setLastPage(pageUser.isLast());
+				return pr;
+				
+			}else {
+				Sort sorting = null;
+				if(sortDir.equalsIgnoreCase("desc")) {
+					sorting = Sort.by(sortBy).descending();
+				}else {
+					sorting = Sort.by(sortBy).ascending();
+				}
+					
+				PageRequest page = PageRequest.of(pageNumber, pageSize, sorting);
+				Page<User> pageUser = userRepo.findByKeyword(search, page);
+				List<User> content = pageUser.getContent();
+				PageableDataResponse<List<User>> pr = new PageableDataResponse<>();
+				pr.setContent(content);
+				pr.setPageNumber(pageUser.getNumber());
+				pr.setPageSize(pageUser.getSize());
+				pr.setTotalElements(pageUser.getTotalElements());
+				pr.setTotalPages(pageUser.getTotalPages());
+				pr.setLastPage(pageUser.isLast());
+				return pr;
+			}
+		} catch (Exception e) {
+//			e.printStackTrace();
+			throw new  ForbbidonExceptions("Something Went Wrong !!");
+		}
+		
 	}
 
 }

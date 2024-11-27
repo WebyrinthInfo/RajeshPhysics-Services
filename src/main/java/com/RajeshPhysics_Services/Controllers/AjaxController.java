@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -126,4 +127,31 @@ private static final Logger logger = LoggerFactory.getLogger(AjaxController.clas
 				throw new AuthenticationException("Disable username or password");
 			}
 		}
+		
+//		-------------{ update user token }-----------------------------------
+		@PutMapping("/updateToken")
+		public ResponseEntity<GenericResponse<User>> updateUserToken(@RequestParam ("username") String username, @RequestParam ("days") Long days, @RequestParam (name="isPaid", defaultValue = AppConstrants.FREE_STUDENT) String isPaid, GenericResponse<User> response){
+			User userInfo = null;
+			if(username!=null && days !=null) {
+				 userInfo = userServe.updateUserToken(username, days, isPaid);
+				 if(userInfo!=null) {
+					 response.setData(userInfo);
+					 response.setMsg("Token update Successfully Successfully for "+days+" Days");
+					 response.setStatus("SUCCESS");
+					 return new ResponseEntity<GenericResponse<User>>(response, HttpStatus.OK);
+				 }else {
+					 response.setData(userInfo);
+					 response.setMsg("Something went Wrong!!");
+					 response.setStatus("INTERNAL_SERVER_ERROR");
+					 return new ResponseEntity<GenericResponse<User>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+				 }
+			}else {
+				response.setData(userInfo);
+				response.setMsg("Invalid Parameters");
+				response.setStatus("BAD_REQUEST");
+				return new ResponseEntity<GenericResponse<User>>(response, HttpStatus.BAD_REQUEST);
+			}
+			
+		}
+		
 }

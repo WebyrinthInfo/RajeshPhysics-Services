@@ -2,8 +2,23 @@ package com.RajeshPhysics_Services.Payloads;
 
 public class AppConstrants {
 
+//	----------------STUDENT TYPE----------------------
 	public static final String FREE_STUDENT = "FREE";
 	public static final String PAID_STUDENT = "PAID";
+	
+//	----------------STUDENT ROLE--------------------
+	public static final String STUDENT_ROLE_ID = "2";
+	
+//	----------searching, shorting, pagination------------------- 
+	public static final String PAGE_NUMBER = "0";
+	public static final String PAGE_SIZE = "7";
+	public static final String SORT_BY_ID = "id";
+	public static final String SORT_BY_MOBILE = "mobile";
+	public static final String SORT_BY_NAME = "name";
+	public static final String SORT_BY_ADDRESS = "address";
+	public static final String SORT_DIR_DESC = "desc";
+	public static final String SORT_DIR_ASC = "asc";
+	public static final String SEARCH_BY_ID = "id";
 	
 //	-------------------ROLE TYPE---------------------------
 	public static final String WY_ROLE = "WY";
@@ -18,7 +33,7 @@ public class AppConstrants {
 	
 	public static final long JWT_TOKEN_VALIDITY = 3 *24*60 * 60;
 	public static final String AUTHORIZATION_HEADER = "Authorization";
-	public static final String STUDENT_ROLE_ID = "2";
+	
 	
 	
 	

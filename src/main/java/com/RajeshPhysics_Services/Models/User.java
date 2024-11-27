@@ -86,6 +86,9 @@ public class User implements Serializable, UserDetails {
 	
 	@Column(name="JWT_TOKEN", nullable=false)
 	private String jwtToken;
+	
+	@Column(name="IS_PAID",nullable = false)
+	private String isPaid = "FREE";
 
 	@Column(name = "ACCOUNT_EXPIRE_AT", nullable = false)
 	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss a")
@@ -238,28 +241,12 @@ public class User implements Serializable, UserDetails {
 		this.jwtToken = jwtToken;
 	}
 	
-	
+	public String getIsPaid() {
+		return isPaid;
+	}
 
-	public User(Long id, String firstName, String middleName, String lastName, String address, String mobile,
-			String password, String languageMode, String profileImage, String status, int isActive, String jwtToken,
-			String accountExpireAt, LocalDateTime createdAt, LocalDateTime updateAt, List<Role> roles) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.middleName = middleName;
-		this.lastName = lastName;
-		this.address = address;
-		this.mobile = mobile;
-		this.password = password;
-		this.languageMode = languageMode;
-		this.profileImage = profileImage;
-		this.status = status;
-		this.isActive = isActive;
-		this.jwtToken = jwtToken;
-		this.accountExpireAt = accountExpireAt;
-		this.createdAt = createdAt;
-		this.updateAt = updateAt;
-		this.roles = roles;
+	public void setIsPaid(String isPaid) {
+		this.isPaid = isPaid;
 	}
 
 	public User() {
