@@ -15,9 +15,11 @@ import org.springframework.stereotype.Service;
 import com.RajeshPhysics_Services.Exceptions.ForbbidonExceptions;
 import com.RajeshPhysics_Services.Exceptions.ResourceAlreadyExistsException;
 import com.RajeshPhysics_Services.Exceptions.ResourceNotFoundException;
+import com.RajeshPhysics_Services.Models.Course;
 import com.RajeshPhysics_Services.Models.Role;
 import com.RajeshPhysics_Services.Models.User;
 import com.RajeshPhysics_Services.Payloads.PageableDataResponse;
+import com.RajeshPhysics_Services.Repositories.CourseRepository;
 import com.RajeshPhysics_Services.Repositories.RoleRepository;
 import com.RajeshPhysics_Services.Repositories.UserRepository;
 import com.RajeshPhysics_Services.Services.UserService;
@@ -42,10 +44,13 @@ public class UserServiceImpl implements UserService {
 	private RoleRepository roleRepo;
 	
 	@Autowired
+	private CourseRepository courseRepo;
+	
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 	@Override
-	public User createUser(User user, Long id) {
+	public User createUser(User user, Long roleId, Long courseId) {
 		LocalDate currentDate = LocalDate.now();
 		LocalDate plusDays = currentDate.plusDays(3);
 		DateTimeFormatter  dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -59,14 +64,21 @@ public class UserServiceImpl implements UserService {
 			}else {
 				
 //				---------------------get Role info ----------------------
-				Role role2 = roleRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Role is not Found  : "+id));
+				Role role2 = roleRepo.findById(roleId).orElseThrow(()-> new ResourceNotFoundException("Role is not Found  : "+roleId));
 				List<Role>  roles = new ArrayList<>(); 
 				roles.add(role2);
+				
+//				--------------------get Course info------------------------
+				Course courseInfo = courseRepo.findById(courseId).orElseThrow(()-> new ResourceNotFoundException("Course is not Found  : "+courseId));
+				List<Course>  courses = new ArrayList<>(); 
+				courses.add(courseInfo);
+				
 				
 //				----------------------set user and access token -----------
 			
 				user.setMobile(user.getMobile().trim());
 				user.setRoles(roles);
+				user.setCourses(courses);
 				user.setAccountExpireAt(formatedDate);
 //				String activationToken = null;
 //				if(role2.getName()=="STUDENT") {

@@ -8,8 +8,10 @@ public class PermissionConstrants {
 			"/api/ajax/login",
 			"/api/ajax/registration",
 			"/api/course/get-all",
-			"/api/video/upload"
-			
+			"/api/video/upload",
+			"/api/role/add",
+			"/api/course/add",
+			"/api/batch/add"
 			
 	};
 	
@@ -20,7 +22,6 @@ public class PermissionConstrants {
 	
 	public static final String[] WY_URLS= {
 		"/api/role/add",
-		"/api/course/add",
 		"/api/user/get-all"
 		
 			

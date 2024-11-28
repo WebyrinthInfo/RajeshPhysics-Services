@@ -66,8 +66,8 @@ public class User implements Serializable, UserDetails {
 
 	@Column(name = "MOBILE", nullable = false, length = 10, unique = true)
 	private String mobile;
-	
-	@Column(name="PASSWORD", nullable = false)
+
+	@Column(name = "PASSWORD", nullable = false)
 	private String password;
 
 	@Column(name = "LANGUGE_MODE", nullable = false)
@@ -75,19 +75,19 @@ public class User implements Serializable, UserDetails {
 
 	@Column(name = "PROFILE_IMAGE", nullable = false)
 	private String profileImage = "default.png";
-	
+
 //  1 : active, 0 : inactive,  -1 : 
-	@Column(name="STATUS", nullable = false)
+	@Column(name = "STATUS", nullable = false)
 	private String status;
 
 //	1 : active, 0 : inactive 
 	@Column(name = "IS_ACTIVE", nullable = false)
 	private int isActive;
-	
-	@Column(name="JWT_TOKEN", nullable=false)
+
+	@Column(name = "JWT_TOKEN", nullable = false)
 	private String jwtToken;
-	
-	@Column(name="IS_PAID",nullable = false)
+
+	@Column(name = "IS_PAID", nullable = false)
 	private String isPaid = "FREE";
 
 	@Column(name = "ACCOUNT_EXPIRE_AT", nullable = false)
@@ -109,7 +109,10 @@ public class User implements Serializable, UserDetails {
 	@JoinTable(name = "USER_ROLE_MAPPER", joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID"))
 	private List<Role> roles = new ArrayList<>();
 
-	
+//	----------------map user to course --------------------------
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "USER_COURSE_MAPPER", joinColumns = @JoinColumn(name = "User_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "COURSE_ID", referencedColumnName = "ID"))
+	private List<Course> courses = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -191,7 +194,6 @@ public class User implements Serializable, UserDetails {
 		this.isActive = isActive;
 	}
 
-
 	public String getAccountExpireAt() {
 		return accountExpireAt;
 	}
@@ -231,8 +233,7 @@ public class User implements Serializable, UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-		
+
 	public String getJwtToken() {
 		return jwtToken;
 	}
@@ -240,7 +241,7 @@ public class User implements Serializable, UserDetails {
 	public void setJwtToken(String jwtToken) {
 		this.jwtToken = jwtToken;
 	}
-	
+
 	public String getIsPaid() {
 		return isPaid;
 	}
@@ -249,13 +250,22 @@ public class User implements Serializable, UserDetails {
 		this.isPaid = isPaid;
 	}
 
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
+
 	public User() {
 		super();
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<SimpleGrantedAuthority> collect = roles.stream().map(role-> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+		List<SimpleGrantedAuthority> collect = roles.stream().map(role -> new SimpleGrantedAuthority(role.getName()))
+				.collect(Collectors.toList());
 		return collect;
 	}
 
@@ -263,12 +273,10 @@ public class User implements Serializable, UserDetails {
 	public String getUsername() {
 		return mobile;
 	}
-	
+
 	@Override
 	public String getPassword() {
 		return password;
 	}
-	
-	
 
 }

@@ -1,5 +1,6 @@
 package com.RajeshPhysics_Services.Controllers;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -39,7 +40,7 @@ public class UserController {
 
         GenericResponse<PageableDataResponse<List<User>>> response = new GenericResponse<>();
         
-        logger.warn("Fetching users with pageNumber={}, pageSize={}, sortBy={}, sortDir={}, search={}", pageNumber, pageSize, sortBy, sortDir, search);
+        logger.warn("Fetching users with pageNumber={}, pageSize={}, sortBy={}, sortDir={}, search={} : {}", pageNumber, pageSize, sortBy, sortDir, search, LocalDateTime.now());
         
         try {
             PageableDataResponse<List<User>> userPage = userService.getAllUser(pageNumber, pageSize, sortBy, sortDir, search);
@@ -48,20 +49,20 @@ public class UserController {
                 response.setData(userPage);
                 response.setStatus("SUCCESS");
                 response.setMsg("Data fetched successfully!");
-                logger.info("Data fetched successfully!");
+                logger.info("Data fetched successfully! : {} ",LocalDateTime.now() );
                 return new ResponseEntity<GenericResponse<PageableDataResponse<List<User>>>>(response, HttpStatus.OK);
             } else {
                 response.setData(null);
                 response.setStatus("SUCCESS");
                 response.setMsg("No data available!");
-                logger.warn("No data available!");
+                logger.warn("No data available! : {} ", LocalDateTime.now());
                 return new ResponseEntity<GenericResponse<PageableDataResponse<List<User>>>>(response, HttpStatus.OK);
             }
         } catch (Exception e) {
             response.setData(null);
             response.setStatus("INTERNAL_SERVER_ERROR");
             response.setMsg("An error occurred while fetching data!");
-            logger.error("An error occurred while fetching data", e);
+            logger.error("An error occurred while fetching data : {}" ,LocalDateTime.now(), e);
             return new ResponseEntity<GenericResponse<PageableDataResponse<List<User>>>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
