@@ -44,22 +44,22 @@ public class RoleController {
             response.setData(createdRole);
             response.setMsg("Role created successfully.");
             response.setStatus("Success");
-            logger.info("Role added successfully: {}", createdRole.getName());
+            logger.info("Role added successfully: {} : {}", createdRole.getName(), LocalDateTime.now());
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (ResourceAlreadyExistsException e) {
-            logger.warn("Attempted to add an existing role: {}", roleDto.getName(), e);
+            logger.warn("Attempted to add an existing role: {} : {}", roleDto.getName(), LocalDateTime.now(), e);
             response.setData(null);
             response.setStatus("CONFLICT");
             response.setMsg("Role '" + roleDto.getName() + "' already exists.");
             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
         } catch (Exception e) {
-            logger.error("Error while adding role: {}", e.getMessage(), e);
+            logger.error("Error while adding role: {} : {}", e.getMessage(),LocalDateTime.now(), e);
             response.setData(null);
             response.setStatus("FAILURE");
             response.setMsg("An error occurred while creating the role.");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         } finally {
-            logger.info("Exiting addRole");
+            logger.info("Exiting addRole : {}", LocalDateTime.now());
         }
     }
     
@@ -75,16 +75,16 @@ public class RoleController {
             response.setData(roles);
             response.setMsg("Roles fetched successfully.");
             response.setStatus("Success");
-            logger.info("Fetched all roles successfully.");
+            logger.info("Fetched all roles successfully. : {}", LocalDateTime.now());
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("Error while fetching roles: {}", e.getMessage(), e);
+            logger.error("Error while fetching roles: {} : {}", e.getMessage(),LocalDateTime.now(), e);
             response.setData(null);
             response.setStatus("FAILURE");
             response.setMsg("An error occurred while fetching the roles.");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         } finally {
-            logger.info("Exiting getAllRoles");
+            logger.info("Exiting getAllRoles : {} ",LocalDateTime.now());
         }
     }
     

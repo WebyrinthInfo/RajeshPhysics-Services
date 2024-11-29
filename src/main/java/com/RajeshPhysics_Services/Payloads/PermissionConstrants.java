@@ -11,7 +11,8 @@ public class PermissionConstrants {
 			"/api/video/upload",
 			"/api/role/add",
 			"/api/course/add",
-			"/api/batch/add"
+			"/api/batch/add",
+			"/api/batch/get-all"
 			
 	};
 	
