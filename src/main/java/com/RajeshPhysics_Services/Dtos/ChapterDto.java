@@ -39,63 +39,7 @@ public class ChapterDto {
 	private LocalDateTime createdAt;
 	private LocalDateTime updateAt;
 	private List<ChapterTopic> chapterTopics = new ArrayList<>();
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	public String getChapterName() {
-		return chapterName;
-	}
-	public void setChapterName(String chapterName) {
-		this.chapterName = chapterName;
-	}
-	public String getImagePath() {
-		return imagePath;
-	}
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
-	public String getChapterIntroduction() {
-		return chapterIntroduction;
-	}
-	public void setChapterIntroduction(String chapterIntroduction) {
-		this.chapterIntroduction = chapterIntroduction;
-	}
-	public String getChapterDescription() {
-		return chapterDescription;
-	}
-	public void setChapterDescription(String chapterDescription) {
-		this.chapterDescription = chapterDescription;
-	}
-	public int getIsActive() {
-		return isActive;
-	}
-	public void setIsActive(int isActive) {
-		this.isActive = isActive;
-	}
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-	public LocalDateTime getUpdateAt() {
-		return updateAt;
-	}
-	public void setUpdateAt(LocalDateTime updateAt) {
-		this.updateAt = updateAt;
-	}
-	public List<ChapterTopic> getChapterTopics() {
-		return chapterTopics;
-	}
-	public void setChapterTopics(List<ChapterTopic> chapterTopics) {
-		this.chapterTopics = chapterTopics;
-	}
-	public ChapterDto() {
-		super();
-	}
+	
 	
 
 }
