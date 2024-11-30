@@ -12,7 +12,13 @@ public class PermissionConstrants {
 			"/api/role/add",
 			"/api/course/add",
 			"/api/batch/add",
-			"/api/batch/get-all"
+			"/api/batch/get-all",
+			"/api/chapter-topic/add",
+			"/api/chapter-topic/get-all",
+			"/api/chapter/add",
+			"/api/chapter/get-all",
+			"/api/subject/get-all",
+			"/api/subject/add"
 			
 	};
 	

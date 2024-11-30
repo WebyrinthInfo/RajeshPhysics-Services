@@ -54,11 +54,11 @@ public class Subject implements Serializable {
 	@Column(name="IS_ACTIVE")
 	private int isActive = 1;
 	
-	@Column(name="CHAPTER_INTRODUCTION")
-	private String chapterIntroduction;
+	@Column(name="SUBJECT_INTRODUCTION")
+	private String subjectIntroduction;
 	
-	@Column(name="CHAPTER_DESCRIPTION")
-	private String chapterDescription;
+	@Column(name="SUBJECT_DESCRIPTION")
+	private String subjectDescription;
 	
 	@Column(name = "CREATED_AT")
 	@CreationTimestamp
@@ -107,20 +107,22 @@ public class Subject implements Serializable {
 		this.isActive = isActive;
 	}
 
-	public String getChapterIntroduction() {
-		return chapterIntroduction;
+	
+
+	public String getSubjectIntroduction() {
+		return subjectIntroduction;
 	}
 
-	public void setChapterIntroduction(String chapterIntroduction) {
-		this.chapterIntroduction = chapterIntroduction;
+	public void setSubjectIntroduction(String subjectIntroduction) {
+		this.subjectIntroduction = subjectIntroduction;
 	}
 
-	public String getChapterDescription() {
-		return chapterDescription;
+	public String getSubjectDescription() {
+		return subjectDescription;
 	}
 
-	public void setChapterDescription(String chapterDescription) {
-		this.chapterDescription = chapterDescription;
+	public void setSubjectDescription(String subjectDescription) {
+		this.subjectDescription = subjectDescription;
 	}
 
 	public LocalDateTime getCreatedAt() {

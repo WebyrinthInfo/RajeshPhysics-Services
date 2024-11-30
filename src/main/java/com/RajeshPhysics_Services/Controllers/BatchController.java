@@ -35,11 +35,11 @@ public class BatchController {
 	    
 	    // ---------------- Add Batch --------------
 	    @PostMapping("/add")
-	    public ResponseEntity<GenericResponse<BatchDto>> addBatch(@RequestBody BatchDto batchDto, GenericResponse<BatchDto> response) {
+	    public ResponseEntity<GenericResponse<BatchDto>> addBatch(@RequestBody BatchDto batchDto, @RequestParam(name = "subjectId", required = true) Long subjectId, GenericResponse<BatchDto> response ) {
 	        logger.info("Entering addBatch with data: {} : {}", batchDto, LocalDateTime.now());
 	        
 	        try {
-	        	BatchDto createdBatch = batchServe.addBatch(batchDto);
+	        	BatchDto createdBatch = batchServe.addBatch(batchDto, subjectId);
 	            response.setData(createdBatch);
 	            response.setMsg("Batch created successfully.");
 	            response.setStatus("Success");

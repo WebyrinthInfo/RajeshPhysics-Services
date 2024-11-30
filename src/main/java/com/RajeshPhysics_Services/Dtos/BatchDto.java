@@ -1,6 +1,10 @@
 package com.RajeshPhysics_Services.Dtos;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.RajeshPhysics_Services.Models.Subject;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,9 +26,7 @@ public class BatchDto {
 	private String description;
 	
 	private int isActive;
-	
-
-	
+		
 	private String timing;
 	
 	private String batchStartAt;
@@ -34,6 +36,8 @@ public class BatchDto {
 	private LocalDateTime createdAt;
 	
 	private LocalDateTime updatedAt;
+	
+	private List<Subject> subjects = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -121,6 +125,14 @@ public class BatchDto {
 
 	public BatchDto() {
 		super();
+	}
+
+	public List<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(List<Subject> subjects) {
+		this.subjects = subjects;
 	}
 	
 	

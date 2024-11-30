@@ -3,6 +3,7 @@ package com.RajeshPhysics_Services.ServiceImps;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,11 +19,15 @@ import org.springframework.stereotype.Service;
 import com.RajeshPhysics_Services.Dtos.BatchDto;
 import com.RajeshPhysics_Services.Exceptions.ForbbidonExceptions;
 import com.RajeshPhysics_Services.Exceptions.ResourceAlreadyExistsException;
+import com.RajeshPhysics_Services.Exceptions.ResourceNotFoundException;
 import com.RajeshPhysics_Services.Models.Batch;
+import com.RajeshPhysics_Services.Models.ChapterTopic;
 import com.RajeshPhysics_Services.Models.Course;
+import com.RajeshPhysics_Services.Models.Subject;
 import com.RajeshPhysics_Services.Models.User;
 import com.RajeshPhysics_Services.Payloads.PageableDataResponse;
 import com.RajeshPhysics_Services.Repositories.BatchRepository;
+import com.RajeshPhysics_Services.Repositories.SubjectRepository;
 import com.RajeshPhysics_Services.Services.BatchService;
 
 @Service
@@ -31,12 +36,15 @@ public class BatchServiceImpl implements BatchService {
 
 	@Autowired
 	private BatchRepository batchRepo;
+	
+	@Autowired
+	private SubjectRepository subjectRepo;
 
 	@Autowired
 	private ModelMapper modelMapper;
 
 	@Override
-	public BatchDto addBatch(BatchDto batchDto) {
+	public BatchDto addBatch(BatchDto batchDto, Long subjectId) {
 		logger.info("Adding a new Batch: {} : {}", batchDto.getBatchCode(), LocalDateTime.now());
 
 		Optional<Batch> existingBatch = batchRepo.findByBatchCode(batchDto.getBatchCode().trim().toUpperCase());
@@ -44,12 +52,19 @@ public class BatchServiceImpl implements BatchService {
 			logger.warn("Attempt to add existing batch : {} : {}", batchDto.getBatchCode(), LocalDateTime.now());
 			throw new ResourceAlreadyExistsException("Batch '" + batchDto.getBatchCode() + "' already exists.");
 		}
+		
+
+//		--------------------get ChapterTopic info------------------------
+		Subject subjectInfo = subjectRepo.findById(subjectId).orElseThrow(()-> new ResourceNotFoundException("Subject  is not Found  : "+subjectId));
+		List<Subject>  subject = new ArrayList<>(); 
+		subject.add(subjectInfo);
 
 //	        ---------batch will expire in 455 days form the created batch ----------------
 		LocalDate currentDate = LocalDate.now();
 		LocalDate plusDays = currentDate.plusDays(455);
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		String formatedDate = dtf.format(plusDays);
+		
 
 		Batch batch = modelMapper.map(batchDto, Batch.class);
 		batch.setBatchCode(batchDto.getBatchCode().trim().toUpperCase());
@@ -59,6 +74,7 @@ public class BatchServiceImpl implements BatchService {
 		batch.setDescription(batchDto.getDescription().trim());
 		batch.setIsActive(batchDto.getIsActive());
 		batch.setTitle(batchDto.getTitle().trim());
+		batch.setSubjects(subject);
 
 		Batch savedBatch = batchRepo.save(batch);
 		logger.info("Batch added successfully: {} : {}", savedBatch.getBatchCode(), LocalDateTime.now());
