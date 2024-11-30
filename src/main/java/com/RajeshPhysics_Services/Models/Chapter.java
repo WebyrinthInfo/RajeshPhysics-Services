@@ -27,38 +27,38 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name="SUBJECTS")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Subject implements Serializable {
+@Table(name="CHAPTERS")
+@Entity
+public class Chapter implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 458567242680803213L;
+	private static final long serialVersionUID = 9165584429078515121L;
 	
-	@Column(name="ID")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Column(name = "ID")
+	private long id;
+
+	@Column(name = "CHAPTER_NAME")
+	private String chapterName;
 	
-	@Column(name="SUBJECT_NAME")
-	private String name;
-	
-	@Column(name="IMAGE_URL")
-	private String imgUrl;
-	
-	@Column(name="IS_ACTIVE")
-	private int isActive = 1;
+	@Column(name = "IMAGE_PATH")
+	private String imagePath;
 	
 	@Column(name="CHAPTER_INTRODUCTION")
 	private String chapterIntroduction;
 	
 	@Column(name="CHAPTER_DESCRIPTION")
 	private String chapterDescription;
+	
+	@Column(name="IS_ACTIVE")
+	private int isActive=1;
 	
 	@Column(name = "CREATED_AT")
 	@CreationTimestamp
@@ -70,41 +70,33 @@ public class Subject implements Serializable {
 	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss a")
 	private LocalDateTime updateAt;
 	
-//	-----------------One subject having many Chapters-------------------
+//	-----------one chapter having many topics------------------------
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "SUBJECT_CHAPTER_MAPPER", joinColumns = @JoinColumn(name = "SUBJECT_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "CHAPTER_ID", referencedColumnName = "ID"))
-	private List<Chapter> chapters = new ArrayList<>();
+	@JoinTable(name = "CHAPTER_CHAPTER-TOPIC_MAPPER", joinColumns = @JoinColumn(name = "CHAPTER_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "CHAPTER_TABLE_ID", referencedColumnName = "ID"))
+	private List<ChapterTopic> chapterTopics = new ArrayList<>();
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getChapterName() {
+		return chapterName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setChapterName(String chapterName) {
+		this.chapterName = chapterName;
 	}
 
-	public String getImgUrl() {
-		return imgUrl;
+	public String getImagePath() {
+		return imagePath;
 	}
 
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
-	}
-
-	public int getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(int isActive) {
-		this.isActive = isActive;
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 	public String getChapterIntroduction() {
@@ -123,6 +115,14 @@ public class Subject implements Serializable {
 		this.chapterDescription = chapterDescription;
 	}
 
+	public int getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
+	}
+
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
@@ -139,21 +139,20 @@ public class Subject implements Serializable {
 		this.updateAt = updateAt;
 	}
 
-	public List<Chapter> getChapters() {
-		return chapters;
+	public List<ChapterTopic> getChapterTopics() {
+		return chapterTopics;
 	}
 
-	public void setChapters(List<Chapter> chapters) {
-		this.chapters = chapters;
+	public void setChapterTopics(List<ChapterTopic> chapterTopics) {
+		this.chapterTopics = chapterTopics;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
-	public Subject() {
-		super();
-	}
+	
+	
+	
 	
 
 }

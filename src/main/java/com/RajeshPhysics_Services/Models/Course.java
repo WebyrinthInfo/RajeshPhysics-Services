@@ -2,6 +2,8 @@ package com.RajeshPhysics_Services.Models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -9,11 +11,16 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -63,8 +70,9 @@ public class Course implements Serializable {
 	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss a")
 	private LocalDateTime updatedAt;
 
-//	@ManyToMany(mappedBy = "courses", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//	private ArrayList<User> users = new ArrayList<>();
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "COURSE_BATCH_MAPPER", joinColumns = @JoinColumn(name = "COURSE_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "BATCH_ID", referencedColumnName = "ID"))
+	private List<Batch> batches = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -126,15 +134,14 @@ public class Course implements Serializable {
 		return serialVersionUID;
 	}
 	
-//
-//	public ArrayList<User> getUsers() {
-//		return users;
-//	}
-//
-//	public void setUsers(ArrayList<User> users) {
-//		this.users = users;
-//	}
-//	
+
+	public List<Batch> getBatches() {
+		return batches;
+	}
+
+	public void setBatches(List<Batch> batches) {
+		this.batches = batches;
+	}
 
 	public LocalDateTime getCreatedAt() {
 		return createdAt;

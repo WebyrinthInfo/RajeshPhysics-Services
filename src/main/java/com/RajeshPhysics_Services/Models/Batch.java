@@ -3,6 +3,8 @@ package com.RajeshPhysics_Services.Models;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,11 +12,16 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -73,6 +80,11 @@ public class Batch implements Serializable{
 	@UpdateTimestamp
 	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss a")
 	private LocalDateTime updatedAt;
+	
+//	-----------------One Batch having many SUBJECT-------------------
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "BATCH_SUBJECT_MAPPER", joinColumns = @JoinColumn(name = "BATCH_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "SUBJECT_ID", referencedColumnName = "ID"))
+	private List<Subject> subjects = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -160,6 +172,15 @@ public class Batch implements Serializable{
 
 	public void setTiming(String timing) {
 		this.timing = timing;
+	}
+	
+
+	public List<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(List<Subject> subjects) {
+		this.subjects = subjects;
 	}
 
 	public Batch() {
